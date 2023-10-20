@@ -13,29 +13,18 @@ def main(msg: func.ServiceBusMessage):
 
     conn = psycopg2.connect(dbname=techconfdb, user=longtuan03@postgresql-db-sv-tlt-proj3,password="Dragon03", host="postgresql-db-sv-tlt-proj3.postgres.database.azure.com")
     try:
-        cur = conn.cursor()
-        cur.execute("SELECT message,subject FROM notification WHERE id=%s;",(notification_id,))
-        messagePlain, subject = cur.fetchone()
-        cur.execute("SELECT email,first_name FROM attendee;")
-        attendees = cur.fetchall()
-        for attendee in attendees:
-          message = Mail(
-              from_email='from_email@example.com',
-              to_emails=attendee[0],
-              subject='{}: {}'.format(attendee[1], subject),
-              html_content=messagePlain)
-          try:
-              sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-              response = sg.send(message)
-              print(response.status_code)
-              print(response.body)
-              print(response.headers)
-          except Exception as e:
-              print(str(e))
-        # Update the notification table by setting the completed date and updating the status with the total number of attendees notified
-        total_attendees = 'Notified {} attendees'.format(len(attendees))
-        cur.execute("UPDATE notification SET status = %s WHERE id=%s;", (total_attendees,notification_id))
-        conn.commit()
+        notification_query = cursor.execute("SELECT message, subject FROM notification WHERE id = {};".format(notification_id))
+
+        cursor.execute("SELECT first_name, last_name, email FROM attendee;")
+        attendees = cursor.fetchall()
+
+        notification_completed_date = datetime.utcnow()
+
+        notification_status = 'Notified {} attendees'.format(len(attendees))
+        
+        update_query = cursor.execute("UPDATE notification SET status = '{}', completed_date = '{}' WHERE id = {};".format(notification_status, notification_completed_date, notification_id))        
+
+        connection.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         logging.error(error)
     finally:
