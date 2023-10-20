@@ -6,7 +6,7 @@
             "type": "serviceBusTrigger",
             "direction": "in",
             "queueName": "notificationqueue",
-            "connection": "Endpoint=sb://servicebusnamespace-tlt-proj3.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=MZbWudbo6XyjOWyE/DNqRHwtRF+6fB9lo+ASbLPNH0U="
+            "connection": "myservicebus"
         }
     ]
 }
