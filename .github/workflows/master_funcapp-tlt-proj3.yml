@@ -70,6 +70,6 @@ jobs:
           app-name: 'FuncApp-tlt-proj3'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8CAF018A798C4EDBBE894D92676D2BF2 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_752649B7B36C42BB8A7A81CB25D6A18E }}
           scm-do-build-during-deployment: true
           enable-oryx-build: true
