@@ -16,16 +16,16 @@ def main(msg: func.ServiceBusMessage):
     try:
         notification_query = cursor.execute("SELECT message, subject FROM notification WHERE id = {};".format(notification_id))
 
-        cursor.execute("SELECT first_name, last_name, email FROM attendee;")
-        attendees = cursor.fetchall()
+        # cursor.execute("SELECT first_name, last_name, email FROM attendee;")
+        # attendees = cursor.fetchall()
 
-        notification_completed_date = datetime.utcnow()
+        # notification_completed_date = datetime.utcnow()
 
-        notification_status = 'Notified {} attendees'.format(len(attendees))
+        # notification_status = 'Notified {} attendees'.format(len(attendees))
         
-        update_query = cursor.execute("UPDATE notification SET status = '{}', completed_date = '{}' WHERE id = {};".format(notification_status, notification_completed_date, notification_id))        
+        # update_query = cursor.execute("UPDATE notification SET status = '{}', completed_date = '{}' WHERE id = {};".format(notification_status, notification_completed_date, notification_id))        
 
-        conn.commit()
+        # conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         logging.error(error)
     finally:
